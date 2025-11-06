@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://bi6p4fhj41nu"]
+
+[ext_resource type="Texture2D" uid="uid://cxunvcvve8mnu" path="res://assets/Ladder.png" id="1_cq4ai"]
+
+[node name="Ladder" type="Area2D"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(1, -0.999992)
+scale = Vector2(0.138462, 0.281202)
+texture = ExtResource("1_cq4ai")

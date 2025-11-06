@@ -1,0 +1,74 @@
+[gd_scene load_steps=9 format=3 uid="uid://cn1uee6jtr30n"]
+
+[ext_resource type="Texture2D" uid="uid://b8furaujrwxsv" path="res://assets/sprite_sheet-OLD.png" id="1_4flbx"]
+[ext_resource type="Script" uid="uid://dw5cy4fluqpn1" path="res://player.gd" id="1_onrkg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(0, 768, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
+atlas = ExtResource("1_4flbx")
+region = Rect2(32, 768, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hqtel"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_onrkg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_i3pqv")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sweqy"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_onrkg"]
+radius = 14.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i3pqv"]
+radius = 14.0
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_onrkg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_hqtel")
+frame_progress = 0.430826
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_sweqy")
+
+[node name="Ladder_detect_ray" type="RayCast2D" parent="."]
+position = Vector2(0, -1.75)
+target_position = Vector2(0, 5.5)
+collision_mask = 16
+hit_from_inside = true
+collide_with_areas = true
+collide_with_bodies = false
+
+[node name="Climbable" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Climbable"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_onrkg")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, 1)
+shape = SubResource("CircleShape2D_i3pqv")
+
+[connection signal="body_entered" from="Climbable" to="." method="_on_climbable_body_entered"]
+[connection signal="body_entered" from="Climbable" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Climbable" to="." method="_on_area_2d_body_exited"]

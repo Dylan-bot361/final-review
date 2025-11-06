@@ -1,0 +1,48 @@
+[gd_scene load_steps=7 format=3 uid="uid://c4uoou2jk6agj"]
+
+[ext_resource type="Texture2D" uid="uid://b8furaujrwxsv" path="res://assets/sprite_sheet-OLD.png" id="1_4gyqm"]
+[ext_resource type="Script" uid="uid://c0ph60rghmxdh" path="res://enemy.gd" id="1_qi2p4"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iifgy"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(0, 704, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_epg4t"]
+atlas = ExtResource("1_4gyqm")
+region = Rect2(32, 704, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_3yqyl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iifgy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_epg4t")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_wujgv"]
+radius = 17.0294
+
+[node name="Enemy" type="CharacterBody2D"]
+script = ExtResource("1_qi2p4")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_3yqyl")
+frame = 1
+frame_progress = 0.528356
+
+[node name="Detection area" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detection area"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_wujgv")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="body_entered" from="Detection area" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="Detection area" to="." method="_on_detection_area_body_exited"]
